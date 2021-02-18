@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 public class MainFix 
 {
-
     public static void main(String[] args) 
     {
     	//Initial declaration should be declared outside of optionSelection so expenses isn't constantly reset
@@ -14,14 +13,12 @@ public class MainFix
         expenses.add(32000);
         expenses.add(110);
        
-    	
-        /*System.out.println("Hello World!");*/
         System.out.println("\n**************************************\n");
         System.out.println("\tWelcome to TheDesk \n");
         System.out.println("**************************************");
         optionsSelection(expenses);
-
     }
+    
     //ArrayList passed in to ensure that they are up to date
     private static void optionsSelection(ArrayList<Integer> expenses) 
     {
@@ -98,6 +95,7 @@ public class MainFix
             }
         }
     }
+    
     private static void closeApp() {System.out.println("Closing your application... \nThank you!");}
     
     static int binarySearch(ArrayList<Integer> arrayList, int left, int right, int target) 
@@ -113,10 +111,12 @@ public class MainFix
   
             if (arrayList.get(middle) > target)
             {
+            	//search left side of list
             	return binarySearch(arrayList, left, middle - 1, target); 
             }
             else
             {
+            	//search right side of list
             	return binarySearch(arrayList, middle + 1, right, target); 
             } 
         } 
@@ -134,7 +134,7 @@ public class MainFix
     	int i = 1;
     	while (i < leng && arrayList.get(i) <= target)
     	{
-    		i = i*2;
+    		i = i * 2;
     	}
 
     	// Call binary search for the found range.
@@ -145,7 +145,7 @@ public class MainFix
     {
     	//make sure list is sorted before searching
     	sortExpenses(arrayList);
-    	System.out.println("EXPENSES HAVE BEEN SORTED\t");
+    	System.out.println("EXPENSES HAVE BEEN SORTED\n");
         int leng = arrayList.size();
         System.out.println("Enter the expense you want to search:\t");
         @SuppressWarnings("resource")
@@ -155,13 +155,12 @@ public class MainFix
         int result = exponentialSearch(arrayList, leng, target);
         if(result < 0)
         {
-        	System.out.println("Expense was not found\t");
+        	System.out.println("Expense was not found\n");
         }
         else
         {
-        	System.out.println("Expense was found at position: " + result + "\t");
+        	System.out.println("Expense was found at position: " + result + "\n");
         }
-          
     }
     
     static void merge(ArrayList<Integer> arrayList, int left, int middle, int right)
@@ -236,7 +235,7 @@ public class MainFix
     {
         int arrlength =  arrayList.size();
         //Starts a merge sort
-        sort(arrayList, 0, arrlength-1);
+        sort(arrayList, 0, arrlength - 1);
     }
     
 }
