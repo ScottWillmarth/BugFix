@@ -1,9 +1,11 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class MainFix {
+public class MainFix 
+{
 
-    public static void main(String[] args) {
+    public static void main(String[] args) 
+    {
     	//Initial declaration should be declared outside of optionSelection so expenses isn't constantly reset
         ArrayList<Integer> expenses = new ArrayList<Integer>();
         expenses.add(1000);
@@ -96,37 +98,93 @@ public class MainFix {
             }
         }
     }
-    private static void closeApp() {
-        System.out.println("Closing your application... \nThank you!");
+    private static void closeApp() {System.out.println("Closing your application... \nThank you!");}
+    
+    static int binarySearch(ArrayList<Integer> arrayList, int left, int right, int target) 
+    { 
+        if (right >= left) 
+        { 
+            int middle = left + (right - left) / 2; 
+  
+            if (arrayList.get(middle) == target)
+            {
+            	return middle;
             }
-    private static void searchExpenses(ArrayList<Integer> arrayList) 
+  
+            if (arrayList.get(middle) > target)
+            {
+            	return binarySearch(arrayList, left, middle - 1, target); 
+            }
+            else
+            {
+            	return binarySearch(arrayList, middle + 1, right, target); 
+            } 
+        } 
+        
+        return -1; 
+    } 
+    
+    static int exponentialSearch(ArrayList<Integer> arrayList, int leng, int target)
     {
-        int leng = arrayList.size();
-        System.out.println("Enter the expense you need to search:\t");
-        //Complete the method
+    	if (arrayList.get(0) == target)
+    	{
+    		return 0;
+    	}
+    	
+    	int i = 1;
+    	while (i < leng && arrayList.get(i) <= target)
+    	{
+    		i = i*2;
+    	}
+
+    	// Call binary search for the found range.
+    	return binarySearch(arrayList, i/2,  Math.min(i, leng - 1), target);
     }
     
-    static void merge(ArrayList<Integer> arrayList, int l, int m, int r)
+    private static void searchExpenses(ArrayList<Integer> arrayList) 
     {
-        int n1 = m - l + 1;
-        int n2 = r - m;
+    	//make sure list is sorted before searching
+    	sortExpenses(arrayList);
+    	System.out.println("EXPENSES HAVE BEEN SORTED\t");
+        int leng = arrayList.size();
+        System.out.println("Enter the expense you want to search:\t");
+        @SuppressWarnings("resource")
+		Scanner scan = new Scanner(System.in);
+        int target =  scan.nextInt();
+        
+        int result = exponentialSearch(arrayList, leng, target);
+        if(result < 0)
+        {
+        	System.out.println("Expense was not found\t");
+        }
+        else
+        {
+        	System.out.println("Expense was found at position: " + result + "\t");
+        }
+          
+    }
+    
+    static void merge(ArrayList<Integer> arrayList, int left, int middle, int right)
+    {
+        int n1 = middle - left + 1;
+        int n2 = right - middle;
  
         int L[] = new int[n1];
         int R[] = new int[n2];
 
         for (int i = 0; i < n1; ++i)
         {
-        	L[i] = arrayList.get(l + i);
+        	L[i] = arrayList.get(left + i);
         }
             
         for (int j = 0; j < n2; ++j)
         {
-        	R[j] = arrayList.get(m + 1 + j);
+        	R[j] = arrayList.get(middle + 1 + j);
         }
             
         int i = 0;
         int j = 0;
-        int k = l;
+        int k = left;
         
         while(i < n1 && j < n2) 
         {
@@ -144,7 +202,8 @@ public class MainFix {
         }
  
       //Replacing elements of L[] into the arrayList
-        while (i < n1) {
+        while (i < n1) 
+        {
         	arrayList.set(k, L[i]);
             i++;
             k++;
@@ -159,20 +218,20 @@ public class MainFix {
         }
     }
 
-    static void sort(ArrayList<Integer> arrayList, int l, int r)
+    static void sort(ArrayList<Integer> arrayList, int left, int right)
     {
-        if(l < r) 
+        if(left < right) 
         {
-            // Find the middle point
-            int m = l + (r - l) / 2;
+            int middle = left + (right - left) / 2;
  
             //Divide array list
-            sort(arrayList, l, m);
-            sort(arrayList, m + 1, r);
+            sort(arrayList, left, middle);
+            sort(arrayList, middle + 1, right);
 
-            merge(arrayList, l, m, r);
+            merge(arrayList, left, middle, right);
         }
     }
+
     private static void sortExpenses(ArrayList<Integer> arrayList) 
     {
         int arrlength =  arrayList.size();
