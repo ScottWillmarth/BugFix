@@ -17,11 +17,12 @@ public class Main {
                 "3. I wish to delete my expenditure",
                 "4. I wish to sort the expenditures",
                 "5. I wish to search for a particular expenditure",
-                "6. Close the application"
-        };
+                "6. Close the application"};
+        
         int[] arr1 = {1,2,3,4,5,6};
-        int  slen = arr1.length;
-        for(int i=0; i<slen;i++){
+        int  slen = arr1.length();
+        for(int i=0; i<slen;i++)
+        {
             System.out.println(arr[i]);
             // display the all the Strings mentioned in the String array
         }
